@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blackwaterpragmatic.mybatis.mapper.TransactionMapper">
+
+	<insert id="insert">
+ 		insert into transactions (typeId, timeMs, userId, amount)
+		values (#{transactionType.id}, #{timestamp}, #{userId}, #{amount})
+ 	</insert>
+
+	<select id="calculateTotalAmount" resultType="BigDecimal">
+		select sum(amount)
+		from transactions
+		where typeId = #{transactionType.id}
+	</select>
+
+	<select id="calculateTotalUserAmount" resultType="BigDecimal">
+		select sum(amount)
+		from transactions
+		where typeId = #{transactionType.id}
+			and userId = #{userId}
+	</select>
+
+	<select id="countTransactions" resultType="Integer">
+		select count(*)
+		from transactions
+		where typeId = #{transactionType.id}
+	</select>
+</mapper>
